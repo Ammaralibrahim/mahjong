@@ -45,15 +45,7 @@ export default function Home() {
         <LeaderboardList />
       </motion.div>
 
-      {/* Footer */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.4 }}
-        className="text-[#8AA3A8]/40 text-xs mt-8 font-body"
-      >
-        © 2026 Hand Betting Game — Premium Edition
-      </motion.p>
+   
     </main>
   );
 }

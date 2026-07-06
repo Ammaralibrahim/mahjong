@@ -19,9 +19,9 @@ export function NewGameButton() {
       <Button
         onClick={handleClick}
         size="lg"
-        className="relative text-xl px-10 py-5 min-w-[240px] shadow-2xl"
+        className="relative text-xl px-1 py-5 min-w-[240px] shadow-2xl"
       >
-        ✨ Start New Game
+       Start New Game
       </Button>
     </div>
   );
