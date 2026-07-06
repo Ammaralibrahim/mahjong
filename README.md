@@ -75,16 +75,10 @@ store/gameStore.ts       # Zustand store: game state + actions
 - A win adds 10 points, a loss subtracts 5 (score floors at 0).
 - The game ends if any non-number tile value hits 0 or 10, or after 3 deck reshuffles.
 
-## Notes on Authorship
+## Development Notes
 
-This codebase was produced through AI-assisted development (iterative generation and
-refinement via Claude). Rather than guess at a handwritten/AI split I don't have visibility
-into, here's a suggested way to fill this section in accurately:
-
-- **Handwritten / manually adjusted:** *(list specific files or logic you wrote or edited
-  by hand — e.g. game balance numbers, specific styling tweaks, bug fixes you made directly)*
-- **AI-generated / AI-assisted:** *(list the parts produced by an AI assistant, e.g. component
-  scaffolding, animation code, API route boilerplate, error-handling patterns)*
-
-If useful, `git blame` or your editor/AI tool's history is the most reliable source for
-reconstructing this breakdown precisely.
+I used Claude (AI assistant) support to speed up the initial logic and frontend/backend
+implementation of the project. I examined the generated code in detail, understood the
+architecture, and had control to the point where I could modify it and add new features
+when necessary. I used AI as a time-saving tool; design decisions and final responsibility
+for the code belong to me.
