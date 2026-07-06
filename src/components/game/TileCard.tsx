@@ -8,7 +8,7 @@ import { useState } from "react";
 type TileCardProps = {
   tile: Tile;
   tileValues: TileValues;
-  size?: TileIconSize;
+  size?: TileIconSize | "responsive";
   index?: number;
   isNew?: boolean;
 };
@@ -24,10 +24,18 @@ export function TileCard({
   const value = getTileCurrentValue(tile, tileValues);
   const rotation = index * 1.5 - 4.5;
 
+  // Responsive size: mobilde sm, masaüstünde verilen boyut
+  let actualSize: TileIconSize;
+  if (size === "responsive") {
+    actualSize = "lg"; // varsayılan, ancak TileIcon içinde responsive yapacağız
+  } else {
+    actualSize = size;
+  }
+
   const paddingClasses: Record<TileIconSize, string> = {
-    sm: "p-1",
-    md: "p-1.5",
-    lg: "p-2",
+    sm: "p-0.5 sm:p-1",
+    md: "p-1 sm:p-1.5",
+    lg: "p-1.5 sm:p-2",
   };
 
   const isDanger = 
@@ -60,8 +68,8 @@ export function TileCard({
         duration: 0.5,
       }}
       whileHover={{
-        y: -6,
-        scale: 1.04,
+        y: -4,
+        scale: 1.03,
         rotate: 0,
         transition: { duration: 0.15 },
       }}
@@ -77,16 +85,18 @@ export function TileCard({
       }}
       className={`
         relative flex flex-col items-center
-        ${paddingClasses[size]}
+        ${paddingClasses[actualSize]}
         rounded-xl
         transition-all duration-200
         ${isDanger ? "ring-2 ring-[#E74C6F]/40 ring-offset-2 ring-offset-transparent" : ""}
         ${showValue ? "cursor-help" : ""}
+        touch-manipulation
       `}
     >
       <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/5 to-black/10 pointer-events-none" />
-
-      <TileIcon tile={tile} size={size} />
+      
+      {/* TileIcon – size'ı responsive olarak geçiyoruz */}
+      <TileIcon tile={tile} size={size === "responsive" ? "lg" : actualSize} />
 
       {showValue && (
         <motion.div
@@ -94,14 +104,14 @@ export function TileCard({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.15, type: "spring", damping: 15 }}
           className={`
-            mt-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold
+            mt-0.5 sm:mt-1 px-1.5 sm:px-2.5 py-0.5 rounded-full text-[8px] sm:text-[10px] font-bold
             ${getValueColor(value)}
             border border-[#F5B041]/10
             shadow-sm
           `}
         >
-          <span className="flex items-center gap-1">
-            <span className="text-[8px] opacity-50">{getTileEmoji()}</span>
+          <span className="flex items-center gap-0.5 sm:gap-1">
+            <span className="text-[6px] sm:text-[8px] opacity-50">{getTileEmoji()}</span>
             {value}
           </span>
         </motion.div>
@@ -115,7 +125,7 @@ export function TileCard({
           className="absolute z-50 -top-14 left-1/2 -translate-x-1/2
                      bg-[#0A1215] text-white px-3 py-2 rounded-lg
                      text-xs whitespace-nowrap border border-[#F5B041]/20
-                     shadow-xl shadow-black/30"
+                     shadow-xl shadow-black/30 hidden sm:block"
         >
           <div className="flex flex-col items-center gap-0.5">
             <div className="flex items-center gap-2">
@@ -145,9 +155,9 @@ export function TileCard({
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", damping: 15, delay: 0.3 }}
-          className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#F5B041] rounded-full shadow-md flex items-center justify-center"
+          className="absolute -top-1.5 -right-1.5 w-4 h-4 sm:w-5 sm:h-5 bg-[#F5B041] rounded-full shadow-md flex items-center justify-center"
         >
-          <span className="text-[8px] text-[#0A1215] font-bold">✦</span>
+          <span className="text-[6px] sm:text-[8px] text-[#0A1215] font-bold">✦</span>
         </motion.div>
       )}
 
@@ -157,7 +167,7 @@ export function TileCard({
           animate={{ opacity: 1, scale: 1 }}
           className="absolute -top-1 -left-1"
         >
-          <div className="w-2.5 h-2.5 bg-[#E74C6F] rounded-full animate-pulse" />
+          <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-[#E74C6F] rounded-full animate-pulse" />
         </motion.div>
       )}
     </motion.div>

@@ -9,7 +9,7 @@ type TileIconProps = {
   className?: string;
 };
 
-const DIMS: Record<TileIconSize, number> = { sm: 60, md: 88, lg: 120 };
+const DIMS: Record<TileIconSize, number> = { sm: 48, md: 72, lg: 100 };
 
 function getDims(size: TileIconSize) {
   const w = DIMS[size] ?? DIMS.md;
@@ -17,23 +17,17 @@ function getDims(size: TileIconSize) {
   return { w, h };
 }
 
-// Bamboo Tiles
+// ---- Bamboo ----
 function BambooTile({ value, size = "md" }: { value: number; size?: TileIconSize }) {
   const { w, h } = getDims(size);
-  const colors = [
-    "#2ECC71", "#27AE60", "#229954",
-    "#1E8449", "#196F3D", "#145A32",
-    "#0E4D2A", "#0A3D22", "#072E1A",
-  ];
+  const colors = ["#2ECC71", "#27AE60", "#229954", "#1E8449", "#196F3D", "#145A32", "#0E4D2A", "#0A3D22", "#072E1A"];
   const color = colors[value - 1] || "#2ECC71";
   return (
     <svg width={w} height={h} viewBox="0 0 100 140" className="drop-shadow-sm">
       <rect x="4" y="4" width="92" height="132" rx="10" fill="#F8F5F0" stroke="#E8E0D6" strokeWidth="1.5"/>
       <rect x="8" y="8" width="84" height="124" rx="7" fill="white" opacity="0.4"/>
       <g transform="translate(50, 68)">
-        {value === 1 && (
-          <rect x="-12" y="-35" width="24" height="70" rx="12" fill={color} opacity="0.85"/>
-        )}
+        {value === 1 && <rect x="-12" y="-35" width="24" height="70" rx="12" fill={color} opacity="0.85"/>}
         {value === 2 && (
           <>
             <rect x="-22" y="-38" width="18" height="42" rx="9" fill={color} opacity="0.85"/>
@@ -77,14 +71,10 @@ function BambooTile({ value, size = "md" }: { value: number; size?: TileIconSize
   );
 }
 
-// Dot Tiles
+// ---- Dot ----
 function DotTile({ value, size = "md" }: { value: number; size?: TileIconSize }) {
   const { w, h } = getDims(size);
-  const colors = [
-    "#E74C6F", "#E74C3C", "#D35400",
-    "#E67E22", "#F39C12", "#F1C40F",
-    "#2ECC71", "#1ABC9C", "#3498DB",
-  ];
+  const colors = ["#E74C6F", "#E74C3C", "#D35400", "#E67E22", "#F39C12", "#F1C40F", "#2ECC71", "#1ABC9C", "#3498DB"];
   const color = colors[value - 1] || "#E74C6F";
   return (
     <svg width={w} height={h} viewBox="0 0 100 140" className="drop-shadow-sm">
@@ -133,7 +123,7 @@ function DotTile({ value, size = "md" }: { value: number; size?: TileIconSize })
   );
 }
 
-// Character Tiles
+// ---- Character ----
 function CharacterTile({ value, size = "md" }: { value: number; size?: TileIconSize }) {
   const { w, h } = getDims(size);
   const colors = ["#2C3E50", "#34495E", "#2C3E50", "#1A252F", "#2C3E50", "#34495E", "#2C3E50", "#1A252F", "#2C3E50"];
@@ -152,7 +142,7 @@ function CharacterTile({ value, size = "md" }: { value: number; size?: TileIconS
   );
 }
 
-// Wind Tiles
+// ---- Wind ----
 function WindTile({ wind, size = "md" }: { wind: string; size?: TileIconSize }) {
   const { w, h } = getDims(size);
   const colors = { east: "#3498DB", south: "#E74C3C", west: "#2ECC71", north: "#9B59B6" };
@@ -173,7 +163,7 @@ function WindTile({ wind, size = "md" }: { wind: string; size?: TileIconSize }) 
   );
 }
 
-// Dragon Tiles
+// ---- Dragon ----
 function DragonTile({ dragon, size = "md" }: { dragon: string; size?: TileIconSize }) {
   const { w, h } = getDims(size);
   const colors = { red: "#E74C3F", green: "#2ECC71", white: "#BDC3C7" };
@@ -201,7 +191,7 @@ function DragonTile({ dragon, size = "md" }: { dragon: string; size?: TileIconSi
   );
 }
 
-// Main Tile Icon
+// ---- Main TileIcon ----
 export function TileIcon({ tile, size = "md", className = "" }: TileIconProps) {
   const safeSize: TileIconSize = (["sm", "md", "lg"] as const).includes(size) ? size : "md";
   const { w, h } = getDims(safeSize);
@@ -211,28 +201,20 @@ export function TileIcon({ tile, size = "md", className = "" }: TileIconProps) {
     const [suit, val] = tile.key.split("-");
     const value = parseInt(val, 10);
     const props = { value, size: safeSize };
-
     switch (suit) {
-      case "bamboo":
-        return <div style={containerStyle} className={className}><BambooTile {...props} /></div>;
-      case "dot":
-        return <div style={containerStyle} className={className}><DotTile {...props} /></div>;
-      case "character":
-        return <div style={containerStyle} className={className}><CharacterTile {...props} /></div>;
-      default:
-        return null;
+      case "bamboo": return <div style={containerStyle} className={className}><BambooTile {...props} /></div>;
+      case "dot": return <div style={containerStyle} className={className}><DotTile {...props} /></div>;
+      case "character": return <div style={containerStyle} className={className}><CharacterTile {...props} /></div>;
+      default: return null;
     }
   }
-
   if (tile.category === "wind") {
     const wind = tile.key.split("-")[1];
     return <div style={containerStyle} className={className}><WindTile wind={wind} size={safeSize} /></div>;
   }
-
   if (tile.category === "dragon") {
     const dragon = tile.key.split("-")[1];
     return <div style={containerStyle} className={className}><DragonTile dragon={dragon} size={safeSize} /></div>;
   }
-
   return null;
 }

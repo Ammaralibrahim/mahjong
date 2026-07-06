@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGameStore } from "@/store/gameStore";
@@ -13,7 +12,6 @@ export function ScoreSummaryModal() {
   const isSubmittingScore = useGameStore((state) => state.isSubmittingScore);
   const resetToLanding = useGameStore((state) => state.resetToLanding);
   const router = useRouter();
-
   const [playerName, setPlayerName] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -36,7 +34,7 @@ export function ScoreSummaryModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-3 sm:p-4 backdrop-blur-sm"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -48,9 +46,8 @@ export function ScoreSummaryModal() {
               stiffness: 300,
               duration: 0.4 
             }}
-            className="glass rounded-3xl p-8 md:p-10 w-full max-w-md border border-[#F5B041]/20 relative overflow-hidden"
+            className="glass rounded-3xl p-6 sm:p-8 md:p-10 w-full max-w-sm sm:max-w-md border border-[#F5B041]/20 relative overflow-hidden mx-2"
           >
-            {/* Arka plan efekti */}
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#F5B041]/5 rounded-full blur-2xl pointer-events-none" />
             
             <div className="text-center relative z-10">
@@ -58,22 +55,22 @@ export function ScoreSummaryModal() {
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: "spring", damping: 15, delay: 0.1 }}
-                className="text-6xl mb-3"
+                className="text-5xl sm:text-6xl mb-2 sm:mb-3"
               >
                 {score > 80 ? "🏆" : score > 50 ? "⭐" : "🎯"}
               </motion.div>
               
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#F5B041] to-[#F7DC6F] bg-clip-text text-transparent font-display">
+              <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#F5B041] to-[#F7DC6F] bg-clip-text text-transparent font-display">
                 Game Over
               </h2>
               
-              <div className="mt-4 mb-6">
-                <span className="text-[#8AA3A8] text-sm uppercase tracking-[0.2em]">Your Score</span>
+              <div className="mt-3 sm:mt-4 mb-4 sm:mb-6">
+                <span className="text-[#8AA3A8] text-[10px] sm:text-sm uppercase tracking-[0.2em]">Your Score</span>
                 <motion.p
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2, type: "spring", damping: 12, stiffness: 200 }}
-                  className="text-6xl font-bold text-[#F7DC6F] font-display"
+                  className="text-5xl sm:text-6xl font-bold text-[#F7DC6F] font-display"
                 >
                   {score}
                 </motion.p>
@@ -85,19 +82,19 @@ export function ScoreSummaryModal() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="flex flex-col gap-4 relative z-10"
+                className="flex flex-col gap-3 sm:gap-4 relative z-10"
               >
                 <input
                   value={playerName}
                   onChange={(e) => setPlayerName(e.target.value)}
                   placeholder="👤 Enter your name"
                   maxLength={30}
-                  className="bg-[#1A2A2F] border border-[#F5B041]/30 rounded-xl px-5 py-3 text-[#F0E6D3] placeholder:text-[#8AA3A8]/50 outline-none focus:border-[#F5B041] transition-all duration-200"
+                  className="bg-[#1A2A2F] border border-[#F5B041]/30 rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-[#F0E6D3] placeholder:text-[#8AA3A8]/50 outline-none focus:border-[#F5B041] transition-all duration-200 text-sm sm:text-base"
                 />
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmittingScore || !playerName.trim()}
-                  className="w-full"
+                  className="w-full text-sm sm:text-base"
                 >
                   {isSubmittingScore ? (
                     <span className="flex items-center gap-2 justify-center">
@@ -119,25 +116,25 @@ export function ScoreSummaryModal() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ type: "spring", damping: 15 }}
-                className="text-center py-4 relative z-10"
+                className="text-center py-3 sm:py-4 relative z-10"
               >
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", damping: 12 }}
-                  className="text-4xl mb-2"
+                  className="text-3xl sm:text-4xl mb-1 sm:mb-2"
                 >
                   ✅
                 </motion.div>
-                <p className="text-[#2ECC71] font-semibold text-lg">Score saved!</p>
-                <p className="text-[#8AA3A8] text-sm mt-1">You're on the leaderboard.</p>
+                <p className="text-[#2ECC71] font-semibold text-base sm:text-lg">Score saved!</p>
+                <p className="text-[#8AA3A8] text-xs sm:text-sm mt-1">You're on the leaderboard.</p>
               </motion.div>
             )}
 
             <Button
               onClick={handleExit}
               variant="outline"
-              className="w-full mt-4 relative z-10"
+              className="w-full mt-3 sm:mt-4 relative z-10 text-sm sm:text-base"
             >
               🏠 Back to Home
             </Button>

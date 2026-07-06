@@ -28,30 +28,32 @@ export function HandDisplay({ hand, tileValues, label, previousTotal }: HandDisp
     setTotal(newTotal);
   }, [hand, tileValues, previousTotal]);
 
+  // Mobilde tile boyutunu otomatik küçült
+  const tileSize = "lg"; // sabit, ancak TileCard içinde responsive yapacağız
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-col items-center gap-5 p-8 glass rounded-2xl w-full max-w-3xl border border-[#F5B041]/10 relative"
+      className="flex flex-col items-center gap-3 sm:gap-5 p-4 sm:p-8 glass rounded-2xl w-full max-w-3xl border border-[#F5B041]/10 relative mx-auto"
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-transparent via-[#F5B041]/30 to-transparent" />
 
       {label && (
-        <span className="text-[#8AA3A8] text-xs uppercase tracking-[0.2em] font-semibold">
+        <span className="text-[#8AA3A8] text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold">
           {label}
         </span>
       )}
 
-      {/* Larger tiles need more breathing room and min-height */}
-      <div className="flex flex-wrap justify-center gap-4 min-h-[170px] items-center">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-4 min-h-[120px] sm:min-h-[170px] items-center w-full">
         <AnimatePresence mode="wait">
           {hand.map((tile, idx) => (
             <TileCard
               key={tile.instanceId}
               tile={tile}
               tileValues={tileValues}
-              size="lg"
+              size="responsive" // yeni bir size modu
               index={idx}
               isNew={idx === hand.length - 1}
             />
@@ -66,11 +68,10 @@ export function HandDisplay({ hand, tileValues, label, previousTotal }: HandDisp
           animate={{ scale: 1 }}
           transition={{ type: "spring", damping: 15, stiffness: 200 }}
         >
-          <span className="text-4xl font-bold bg-gradient-to-r from-[#F5B041] to-[#F7DC6F] bg-clip-text text-transparent font-display">
+          <span className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#F5B041] to-[#F7DC6F] bg-clip-text text-transparent font-display">
             {total}
           </span>
         </motion.div>
-
         <AnimatePresence>
           {showScorePop && scoreChange !== null && (
             <motion.div
@@ -85,7 +86,7 @@ export function HandDisplay({ hand, tileValues, label, previousTotal }: HandDisp
               }}
               className="absolute -top-2 left-1/2 -translate-x-1/2 pointer-events-none"
             >
-              <span className={`text-2xl font-bold ${scoreChange >= 0 ? "text-[#2ECC71]" : "text-[#E74C6F]"}`}>
+              <span className={`text-xl sm:text-2xl font-bold ${scoreChange >= 0 ? "text-[#2ECC71]" : "text-[#E74C6F]"}`}>
                 {scoreChange >= 0 ? "+" : ""}{scoreChange}
               </span>
             </motion.div>
